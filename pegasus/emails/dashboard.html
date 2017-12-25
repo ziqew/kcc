@@ -1,0 +1,18 @@
+---
+<%
+formatted_from = "Code.org <noreply@code.org>"
+if defined? from && from != nil
+  if from.include? '<'
+    formatted_from = from
+  else
+    formatted_from = "Code.org <#{from}>"
+  end
+end
+%>
+from: <%= formatted_from.inspect %>
+subject: <%= subject.inspect %>
+reply-to: <%= reply_to ? reply_to.inspect : nil %>
+---
+<%= body %>
+
+<img src="<%= tracking_pixel %>"/>
