@@ -1,0 +1,124 @@
+- content_for(:head) do
+  %script{src: minifiable_asset_path('js/levelbuilder_applab.js')}
+
+.field
+  = f.label :slider_speed, 'Slider speed'
+  %p Number from 0.0 to 1.0 for how fast Applab runs by default while in the IDE. If not set, default is 1.0
+  = f.number_field :slider_speed, :step => 0.1
+.field
+  = f.label :show_turtle_before_run, 'Show turtle before Run is pressed'
+  = boolean_check_box f, :show_turtle_before_run
+.field
+  = f.label :text_mode_at_start, 'Text mode (showing code) at start'
+  = f.radio_button :text_mode_at_start, 'false'
+  = f.label :text_mode_at_start, 'Start with user preferred setting', :value => 'false'
+  = f.radio_button :text_mode_at_start, 'blocks'
+  = f.label :text_mode_at_start, 'Always start with blocks', :value => 'blocks'
+  = f.radio_button :text_mode_at_start, 'true'
+  = f.label :text_mode_at_start, 'Always start with text', :value => 'true'
+.field
+  = f.label :design_mode_at_start, 'Start in Design Mode'
+  = boolean_check_box f, :design_mode_at_start
+.field
+  = f.label :hide_design_mode, 'Hide Design Mode'
+  = boolean_check_box f, :hide_design_mode
+.field
+  = f.label :makerlab_enabled, 'Enable Maker APIs'
+  = boolean_check_box f, :makerlab_enabled
+.field
+  = f.label :expand_debugger, 'Expand Debugger by Default'
+  = boolean_check_box f, :expand_debugger
+= render partial: 'levels/editors/watchers_ui', locals: {f: f}
+.field
+  = f.label :autocomplete_palette_apis_only, 'Autocomplete palette APIs only'
+  = boolean_check_box f, :autocomplete_palette_apis_only
+.field
+  = f.label :execute_palette_apis_only, 'Execute palette APIs only'
+  = boolean_check_box f, :execute_palette_apis_only
+.field
+  = f.label :beginner_mode, 'Beginner mode for loops'
+  = boolean_check_box f, :beginner_mode
+.field
+  = f.label :submittable, 'Submittable'
+  %p
+    If checked, students with teachers can "submit" a solution for
+    grading. Submitting a solution means that it is marked as
+    submitted and they can no longer edit it (unless a teacher returns
+    it).
+  = boolean_check_box f, :submittable
+.field
+  = f.label :start_html, 'Starting design mode html'
+  %p
+    This should be equivalent to the level html created by design mode. The recommended way to generate this
+    is to add your elements in design mode, hit run, then open up the browser console and type `Applab.levelHtml`.
+    IMPORTANT WARNING: If you have referenced images in the HTML and/or  CODE, then you need to get fully-qualified
+    code.org https URLS for these assets and update the HTML and the code to reflect these. You can quickly get full
+    image urls by drag-dropping the image into the markdown section of a dummy level in levelbuilder.
+    Copy the result and paste it here (it should start with something like
+    #{html_escape("<div xmlns='http://www.w3.org/1999/xhtml' id='divApplab'")}...)
+  = f.text_area :start_html, placeholder: 'Start html', rows: 4, value: @level.start_html
+  :javascript
+    levelbuilder.initializeCodeMirror('level_start_html', 'html');
+
+= render partial: 'levels/editors/encrypted_examples', locals: {f: f, level_type: 'applab'}
+
+.field
+  = f.label 'Log Conditions'
+  Create a JSON array resembling the example if you want to add requirements that certain functions were executed. These will be checked when the Finish button is pressed.
+  %pre
+    = preserve do
+      :escaped
+        Example:
+        [
+          { "entries": ["function1", "function2"], "matchType": "exact", "minTimes": 1, "message": "You need to call both functions." },
+          { "entries": ["[forTest]", "moveTo", "randomNumber", "randomNumber"], "matchType": "inexact", "minTimes": 20, "message": "You need to call moveTo in a for loop." }
+        ]
+  = f.text_area 'log_conditions', placeholder: 'Insert JSON Data', rows: 4, value: @level.log_conditions ? JSON.pretty_generate(@level.log_conditions) : ''
+  :javascript
+    levelbuilder.initializeCodeMirror('level_log_conditions', 'javascript');
+
+.field
+  = f.label :fail_on_lint_errors
+  %p
+    Lint warnings and errors (in the editor's gutter area) will prevent the student from continuing when the Finish button is pressed.
+  = boolean_check_box f, :fail_on_lint_errors
+
+.field
+  = f.label 'Table Data'
+  Step 1: Create a project at studio.code.org/p/applab and edit the data for a table in the data browser. Step 2: Copy the data via the debug area at the bottom of the table. Step 3: Paste the data below in the format { "tablename": <paste> }
+  %pre
+    = preserve do
+      :escaped
+        Example:
+        {
+          "table_name": [{ "name": "Trevor", "age": 30 }, { "name": "Hadi", "age": 72}],
+          "table_name2": [{ "city": "Seattle", "state": "WA" }, { "city": "Chicago", "state": "IL"}]
+        }
+  = f.text_area 'data_tables', placeholder: 'Insert JSON Data', rows: 4, value: @level.data_tables or ''
+  :javascript
+    levelbuilder.initializeCodeMirror('level_data_tables', 'javascript');
+
+.field
+  = f.label 'Key-Value Data'
+  You can copy the data array from the debug view in the Data tab in App Lab.
+  %pre
+    = preserve do
+      :escaped
+        Example:
+        {
+          "click_count": 5,
+          "button_color": "blue"
+        }
+  = f.text_area 'data_properties', placeholder: 'Insert JSON Key-Value Data', rows: 4, value: @level.data_properties or ''
+  :javascript
+    levelbuilder.initializeCodeMirror('level_data_properties', 'javascript');
+
+.field
+  = f.label 'Hide Data Button'
+  = boolean_check_box f, :hide_view_data_button
+
+.field
+  =f.label 'Disable code debugger (Console is still enabled)'
+  = boolean_check_box f, :debugger_disabled
+
+= render partial: 'levels/editors/teacher_only_markdown', locals: {f: f}

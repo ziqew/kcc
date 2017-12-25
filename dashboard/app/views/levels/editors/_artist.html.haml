@@ -1,0 +1,48 @@
+.field
+  = f.label :slider_speed, 'Slider speed (artist only)'
+  %p Number from 0.0 to 1.0 for how fast artist runs. If not set, default is 1.0
+  = f.number_field :slider_speed, :step => 0.1
+.field
+  = f.label :impressive, 'Impressive'
+  %p Impressive levels can be shared and are automatically saved to the private gallery
+  = boolean_check_box f, :impressive
+.field
+  = f.label :discard_background, 'Discard Background'
+  %p If a level has a background image, don't display that image as feedback or include it in the image saved to the private gallery
+  = boolean_check_box f, :discard_background
+.field
+  = f.label :shapeways_url, 'Shapeways URL'
+  = f.text_field :shapeways_url, placeholder: 'Shapeways project URL for share button'
+.field
+  = f.label :start_direction, 'Start Direction (in degrees)'
+  = f.number_field :start_direction, :in => 0...360, :value => @level.start_direction
+.field
+  = f.label :x
+  = f.number_field :x, :value => @level.x
+.field
+  = f.label :y
+  = f.number_field :y, :value => @level.y
+.field
+  = f.label :permitted_errors, 'Permitted errors (default 0)'
+  = f.number_field :permitted_errors, :value => @level.permitted_errors
+.field
+  = link_to 'Edit Predraw Blocks', level_edit_blocks_path(@level, :predraw_blocks) unless @level.new_record?
+  = f.text_area :predraw_blocks, placeholder: 'Predraw Blocks', rows: 4, value: @level.pretty_block('predraw')
+  :javascript
+    levelbuilder.initializeCodeMirror('level_predraw_blocks', '#{@level.game.uses_droplet? ? 'javascript' : 'xml'}');
+.field
+  = f.label :images, 'Image field in JSON array format, e.g.:'
+  %div
+    %pre{:style => '-webkit-user-select: text'}
+      = preserve do
+        :escaped
+          [
+            {"filename": "https://images.code.org/cat.png", "position": [16, 170]},
+            {"filename": "https://images.code.org/lion.png", "position": [15, 250]},
+            {"filename": "https://images.code.org/elephant.png", "position": [127, 220]},
+            {"filename": "https://images.code.org/cow.png", "position": [255, 250]}
+          ]
+    %p Paste or drag images into this field to upload them, similar to adding images to Markdown Instructions.
+  = f.text_area :images, placeholder: 'Images', rows: 4, value: @level.properties['images']
+  :javascript
+    levelbuilder.initializeCodeMirror('level_images', 'javascript', null, true);

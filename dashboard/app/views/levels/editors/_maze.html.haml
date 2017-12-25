@@ -1,0 +1,10 @@
+.field
+  = f.label :start_direction
+  = f.select :start_direction, options_for_select(@level.class.start_directions, @level.start_direction)
+.field
+  = f.label :step_mode
+  = f.select :step_mode, options_for_select(@level.class.step_modes, @level.step_mode)
+.field
+  = f.label :shape_shift
+  %p Randomly rotate the puzzle to a new orientation each time it is loaded.
+  = boolean_check_box f, :shape_shift
