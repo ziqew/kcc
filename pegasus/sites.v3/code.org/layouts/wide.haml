@@ -1,0 +1,32 @@
+=inline_css 'warning-banner.css'
+
+.wrapper
+  = view :unsupported_browser
+  -unless header['theme'] == 'responsive_wide'
+    - if request.site == 'code.org'
+      = view :header2
+    - else
+      = view :header
+
+  -containerClass = "container_fullwidth"
+
+  .containerClass
+
+    -if header['theme'] == 'responsive_wide'
+      =body
+
+      #clearboth{:style=>"clear:both"}
+      .desktop-feature
+
+  .push
+
+-if header['theme'] == 'responsive_wide'
+  -if page_translated? && !partner_site?
+    = view :mobile_footer_responsive
+  -else
+    .desktop-feature
+      = view :footer
+    .mobile-headers.mobile-feature
+      = view :mobile_footer_responsive
+-else
+  = view :footer

@@ -1,0 +1,47 @@
+{
+  "cn": {
+    "full_name": "China",
+    "default_language": "cn",
+    "partner_page": "code.org",
+    "campaign_date_year": "2017",
+    "campaign_date_full_year": "December 4-10, 2017",
+    "campaign_date_start_short": "12 月 4 日",
+    "campaign_date_start_long": "12 月 4 日",
+    "campaign_date_short": "12 月 4-10",
+    "campaign_date_full": "12 月 4-10"
+  },
+  "hk": {
+    "full_name": "Hong Kong",
+    "default_language": "zh",
+    "partner_page": "code.org",
+    "campaign_date_year": "2017",
+    "campaign_date_full_year": "December 4-10, 2017",
+    "campaign_date_start_short": "12 月 4 日",
+    "campaign_date_start_long": "12 月 4 日",
+    "campaign_date_short": "12月4日～12月10日",
+    "campaign_date_full": "12月4日～12月10日"
+  },
+  "uk": {
+    "full_name": "United Kingdom",
+    "default_language": "gb",
+    "solr_country_code": "gb",
+    "partner_page": "uk.code.org",
+    "campaign_date_year": "2017",
+    "campaign_date_full_year": "December 4-10, 2017",
+    "campaign_date_start_short": "Dec. 4",
+    "campaign_date_start_long": "December 4",
+    "campaign_date_short": "Dec. 4-10",
+    "campaign_date_full": "December 4-10"
+  },
+  "us": {
+    "full_name": "United States",
+    "default_language": "en",
+    "partner_page": "code.org",
+    "campaign_date_year": "2017",
+    "campaign_date_full_year": "December 4-10, 2017",
+    "campaign_date_start_short": "Dec. 4",
+    "campaign_date_start_long": "December 4",
+    "campaign_date_short": "Dec. 4-10",
+    "campaign_date_full": "December 4-10"
+  }
+}

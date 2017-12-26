@@ -1,0 +1,43 @@
+---
+theme: responsive_wide
+banner: null
+layout: wide
+video_player: true
+social:
+  "twitter:site": "@codeorg"
+  "twitter:url": "https://code.org/"
+critical_font: true
+jquery: defer
+style_min: true
+---
+=inline_css 'homepage.css'
+=inline_css 'user-hero.css'
+
+- cookie_key = '_user_type' + (rack_env == :production ? '' : "_#{rack_env.to_s}")
+- user_type = request.cookies[cookie_key]
+- if ["student", "teacher"].include?(user_type)
+  - redirect CDO.studio_url('/home', CDO.default_scheme)
+
+-# The homepage gsheet may specify "en" or "not en" for many row types.
+- languageFilter = request.language == "en" ? "en" : "not en"
+
+#homepage.supreme-container
+  = view :homepage_hero, languageFilter: languageFilter
+
+  - if request.language == "en"
+    = view :stats_homepage
+  - else
+    #petitionexpand{style: "display: block"}
+      - if DB[:cdo_homepage].where(type_s: "petition")
+        = view :petition_expand
+
+  #user_hero
+    .container_responsive
+      #user_hero
+
+  = view :homepage_sections, languageFilter: languageFilter
+
+  = view :homepage_gallery
+  = view :donor_slider
+
+= view :homepage_video
