@@ -2,6 +2,7 @@ require_relative '../../deployment'
 require 'cdo/rake_utils'
 
 namespace :install do
+=begin
   desc 'Install Git hooks.'
   task :hooks do
     files = [
@@ -17,6 +18,7 @@ namespace :install do
       RakeUtils.ln_s path, "#{git_path}/#{f}"
     end
   end
+=end
 
   desc 'Create default locals.yml file if it doesn\'t exist'
   task :locals_yml do
@@ -61,11 +63,13 @@ namespace :install do
   end
 
   tasks = []
+=begin
   tasks << :hooks if rack_env?(:development)
+=end
   tasks << :locals_yml if rack_env?(:development)
   tasks << :apps if CDO.build_apps
   tasks << :dashboard if CDO.build_dashboard
-  tasks << :pegasus if CDO.build_pegasus
+  tasks << :pegasus if CDO.buillnd_pegasus
   task all: tasks
 end
 desc 'Install all OS dependencies.'
